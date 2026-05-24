@@ -1,0 +1,2 @@
+faster-whisper>=1.0
+edge-tts>=6.1

@@ -1,0 +1,6 @@
+pynput>=1.7
+sounddevice>=0.5
+soundfile>=0.12
+numpy>=2.0
+pystray>=0.19
+pillow>=10.0
