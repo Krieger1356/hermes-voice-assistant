@@ -37,8 +37,8 @@ from datetime import datetime
 from pathlib import Path
 
 # ── Configuration ──────────────────────────────────────────────────
-SERVER_HOST = "192.168.4.100"       # Debian server IP
-SERVER_USER = "krieger"             # SSH username
+SERVER_HOST = "your-server-ip"        # Your Linux server IP or hostname
+SERVER_USER = "your-username"         # SSH username on the server
 SERVER_PIPELINE = "~/.hermes/scripts/voice-pipeline.py"
 HOTKEY_COMBO = {"ctrl", "shift"}    # Hold Ctrl+Shift then press Space
 HOTKEY_KEY = "space"                # The key you press while holding modifiers

@@ -81,8 +81,8 @@ type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh user@your-server "cat >> ~/.ssh/
 
 # Edit the script — set your server's IP
 notepad client/hermes-voice-client.py
-#   SERVER_HOST = "192.168.4.100"
-#   SERVER_USER = "krieger"
+#   SERVER_HOST = "your-server-ip"
+#   SERVER_USER = "your-username"
 
 # Test it
 pythonw client/hermes-voice-client.py
@@ -107,8 +107,8 @@ Edit the top of `client/hermes-voice-client.py`:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `SERVER_HOST` | `192.168.4.100` | Your Linux server IP |
-| `SERVER_USER` | `krieger` | SSH username |
+| `SERVER_HOST` | `your-server-ip` | Your Linux server IP |
+| `SERVER_USER` | `your-username` | SSH username |
 | `SERVER_PIPELINE` | `~/.hermes/scripts/voice-pipeline.py` | Path to pipeline on server |
 | `HOTKEY_COMBO` | `{"ctrl", "shift"}` | Modifier keys |
 | `HOTKEY_KEY` | `space` | Trigger key |
