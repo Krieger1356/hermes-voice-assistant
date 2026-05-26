@@ -33,7 +33,8 @@ Hold Ctrl+Shift+Space
 - 🔇 **Completely silent** — no CMD windows flash, no media player popups
 - 🎤 **Windows default mic** — uses whatever mic Windows is set to
 - 🔁 **Auto-retry** — waits for mic if USB headset isn't plugged in yet
-- 📝 **Debug log** — everything logged to `%TEMP%\hermes-voice.log`
+- 📝 **Debug log** — everything logged to `%TEMP%\\hermes-voice.log`
+- 📜 **Full transcripts** — every query & response saved to `~/hermes-voice-transcripts/` — no external services needed
 - 💰 **$0/month** — all components are free (faster-whisper, Edge TTS)
 
 ## Prerequisites
@@ -112,6 +113,7 @@ Edit the top of `client/hermes-voice-client.py`:
 | `SERVER_PIPELINE` | `~/.hermes/scripts/voice-pipeline.py` | Path to pipeline on server |
 | `HOTKEY_COMBO` | `{"ctrl", "shift"}` | Modifier keys |
 | `HOTKEY_KEY` | `space` | Trigger key |
+| `RESPONSES_LOG_DIR` | `~/hermes-voice-transcripts/` | Where full transcripts are saved locally |
 
 Server-side environment variables (optional):
 
@@ -147,6 +149,35 @@ The client uses Windows' built-in MCI API (`winmm.dll`) for audio playback — n
 ```
 WAV input → faster-whisper → text → Hermes API → response → Edge TTS → MP3 output
 ```
+
+## Transcript Logging
+
+Every voice query is automatically saved as a markdown transcript on your Windows laptop — no Syncthing, cloud sync, or extra services required.
+
+### Where to Find Transcripts
+
+```
+~/hermes-voice-transcripts/
+├── 20260526_143022.md     # One file per query — timestamped
+├── 20260526_144105.md
+└── latest.md              # Always the most recent (quick to open)
+```
+
+### What's in Each File
+
+```markdown
+# Voice Transcript — 2026-05-26 14:30:22
+
+**You:** what's the weather like today
+
+**Hermes:** It's currently 18°C and partly cloudy...
+```
+
+### How It Works
+
+The server pipeline returns the full response text as JSON alongside the audio file. The Windows client saves it to local disk immediately after each query — no additional network calls, no extra latency.
+
+The `latest.md` file is overwritten each time, so you can keep it pinned in your editor or use a quick-start launcher to open it after every query.
 
 ## Troubleshooting
 

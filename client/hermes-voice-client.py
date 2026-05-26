@@ -45,6 +45,9 @@ HOTKEY_KEY = "space"                # The key you press while holding modifiers
 SAMPLE_RATE = 16000
 SSH_TIMEOUT = 120
 LOG_FILE = os.path.join(tempfile.gettempdir(), "hermes-voice.log")
+# Local transcripts — full query/response text saved on the Windows laptop
+# No Syncthing or external service needed. Creates ~/hermes-voice-transcripts/
+RESPONSES_LOG_DIR = os.path.join(os.path.expanduser("~"), "hermes-voice-transcripts")
 # Prevent subprocess calls from flashing CMD windows
 NO_WINDOW = 0x08000000  # CREATE_NO_WINDOW
 # ────────────────────────────────────────────────────────────────────
@@ -342,6 +345,23 @@ def process_recording():
     response = result.get("response", "?")
     log(f"You: {text}")
     log(f"Hermes: {response[:100]}...")
+
+    # Save full transcript locally — no Syncthing needed, works out of the box
+    transcript_dir = Path(RESPONSES_LOG_DIR)
+    transcript_dir.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    time_fmt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    transcript_body = f"""\
+# Voice Transcript — {time_fmt}
+
+**You:** {text}
+
+**Hermes:** {response}
+"""
+    ts_file = transcript_dir / f"{ts}.md"
+    ts_file.write_text(transcript_body, encoding="utf-8")
+    (transcript_dir / "latest.md").write_text(transcript_body, encoding="utf-8")
+    log(f"Transcript saved: {ts_file}")
 
     remote_audio = result.get("audio", "")
     if not remote_audio:
