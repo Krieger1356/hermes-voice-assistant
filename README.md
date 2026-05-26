@@ -1,4 +1,5 @@
 # Hermes Voice Assistant
+## WIP - Works But Still Testing
 
 > Push-to-talk voice assistant for [Hermes Agent](https://github.com/NousResearch/hermes-agent). Hold `Ctrl+Shift+Space`, speak, release — Hermes answers in voice.
 
